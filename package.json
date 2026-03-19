@@ -1,0 +1,25 @@
+{
+  "name": "xhaait",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "build:server": "esbuild server.ts --bundle --platform=node --target=node18 --format=esm --external:./dist/* --outfile=server.js",
+    "preview": "astro preview",
+    "astro": "astro",
+    "scan": "snyk container test angelakimichellle/xhaait:latest"
+  },
+  "dependencies": {
+    "@astrojs/node": "^9.1.0",
+    "astro": "^5.16.15"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@types/node": "^25.2.3",
+    "esbuild": "^0.27.3",
+    "typescript": "^5.7.3",
+    "snyk": "^1.1294.0"
+  }
+}

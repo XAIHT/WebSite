@@ -1,0 +1,380 @@
+---
+import { getLangFromUrl, useTranslations, languages } from "../lib/i18n";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "XHAAIT - Technological Research Company" } =
+  Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const currentPath = Astro.url.pathname;
+const isLoggedIn = Astro.cookies.get("session")?.value;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script is:inline>
+      // Immediate theme application to prevent flash
+      const theme = (() => {
+        if (
+          typeof localStorage !== "undefined" &&
+          localStorage.getItem("theme")
+        ) {
+          return localStorage.getItem("theme");
+        }
+        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+          return "dark";
+        }
+        return "light";
+      })();
+      document.documentElement.setAttribute("data-theme", theme);
+      window.localStorage.setItem("theme", theme);
+    </script>
+    <!-- Note: 'unsafe-inline' is used for development. In production, implement CSP with nonces via server headers -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none';"
+    />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary: #2563eb;
+        --primary-dark: #1e40af;
+        --secondary: #64748b;
+        --background: #ffffff;
+        --surface: #f8fafc;
+        --text: #0f172a;
+        --text-light: #64748b;
+        --border: #e2e8f0;
+        --success: #22c55e;
+        --error: #ef4444;
+        --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+        --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+      }
+
+      [data-theme="dark"] {
+        --primary: #60a5fa;
+        --primary-dark: #3b82f6;
+        --secondary: #94a3b8;
+        --background: #0f172a;
+        --surface: #1e293b;
+        --text: #f1f5f9;
+        --text-light: #cbd5e1;
+        --border: #334155;
+        --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3);
+        --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5);
+      }
+
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        background-color: var(--background);
+        color: var(--text);
+        line-height: 1.6;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      header {
+        background-color: var(--surface);
+        border-bottom: 1px solid var(--border);
+        padding: 1rem 2rem;
+        box-shadow: var(--shadow);
+      }
+
+      nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+        list-style: none;
+      }
+
+      .nav-links a {
+        color: var(--text);
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        border-radius: 0.375rem;
+        transition: background-color 0.2s;
+      }
+
+      .nav-links a:hover {
+        background-color: var(--surface);
+      }
+
+      .nav-links a.active {
+        background-color: var(--primary);
+        color: white;
+      }
+
+      .lang-switcher {
+        display: flex;
+        gap: 0.5rem;
+        padding: 0.25rem;
+        background-color: var(--surface);
+        border-radius: 0.375rem;
+        border: 1px solid var(--border);
+      }
+
+      .lang-switcher a {
+        padding: 0.25rem 0.75rem;
+        text-decoration: none;
+        color: var(--text);
+        border-radius: 0.25rem;
+        font-size: 0.875rem;
+        transition: all 0.2s;
+      }
+
+      .lang-switcher a:hover {
+        background-color: var(--background);
+      }
+
+      .lang-switcher a.active {
+        background-color: var(--primary);
+        color: white;
+      }
+
+      .theme-toggle {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 0.375rem;
+        transition: background-color 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text);
+      }
+
+      .theme-toggle:hover {
+        background-color: var(--surface);
+      }
+
+      /* Hide/Show icons based on theme */
+      :global([data-theme="dark"]) .sun-icon {
+        display: block;
+      }
+      :global([data-theme="dark"]) .moon-icon {
+        display: none;
+      }
+      :global([data-theme="light"]) .sun-icon {
+        display: none;
+      }
+      :global([data-theme="light"]) .moon-icon {
+        display: block;
+      }
+
+      main {
+        flex: 1;
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      footer {
+        background-color: var(--surface);
+        border-top: 1px solid var(--border);
+        padding: 2rem;
+        text-align: center;
+        color: var(--text-light);
+        margin-top: auto;
+      }
+
+      footer a {
+        color: var(--text-light);
+        text-decoration: none;
+        margin: 0 1rem;
+      }
+
+      footer a:hover {
+        color: var(--primary);
+      }
+
+      @media (max-width: 768px) {
+        nav {
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        .nav-links {
+          flex-direction: column;
+          width: 100%;
+          text-align: center;
+        }
+
+        main {
+          padding: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href={`/${lang}`} class="logo">XHAAIT</a>
+        <ul class="nav-links">
+          <li>
+            <a
+              href={`/${lang}`}
+              class={currentPath === `/${lang}` || currentPath === `/${lang}/`
+                ? "active"
+                : ""}>{t("nav.home")}</a>
+          </li>
+          {
+            !isLoggedIn && (
+              <li>
+                <a
+                  href={`/${lang}/login`}
+                  class={currentPath.includes("/login") ? "active" : ""}
+                >
+                  {t("nav.login")}
+                </a>
+              </li>
+            )
+          }
+          {
+            isLoggedIn && (
+              <>
+                <li>
+                  <a
+                    href={`/${lang}/panel`}
+                    class={currentPath.includes("/panel") ? "active" : ""}
+                  >
+                    {t("nav.panel")}
+                  </a>
+                </li>
+                <li>
+                  <a href={`/${lang}/logout`}>{t("nav.logout")}</a>
+                </li>
+              </>
+            )
+          }
+        </ul>
+        <div class="lang-switcher">
+          {
+            Object.entries(languages).map(([code]) => (
+              <a
+                href={currentPath.replace(/^\/(en|es)/, `/${code}`)}
+                class={lang === code ? "active" : ""}
+              >
+                {code.toUpperCase()}
+              </a>
+            ))
+          }
+        </div>
+        <button
+          id="theme-toggle"
+          class="theme-toggle"
+          aria-label="Toggle Dark Mode"
+        >
+          <svg
+            class="sun-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            ><circle cx="12" cy="12" r="5"></circle><line
+              x1="12"
+              y1="1"
+              x2="12"
+              y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line
+              x1="4.22"
+              y1="4.22"
+              x2="5.64"
+              y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"
+            ></line><line x1="1" y1="12" x2="3" y2="12"></line><line
+              x1="21"
+              y1="12"
+              x2="23"
+              y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"
+            ></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg
+          >
+          <svg
+            class="moon-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            ><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+            ></path></svg
+          >
+        </button>
+      </nav>
+      <script is:inline>
+        const handleToggleClick = () => {
+          const element = document.documentElement;
+          const currentTheme = element.getAttribute("data-theme");
+          const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+          element.setAttribute("data-theme", newTheme);
+          localStorage.setItem("theme", newTheme);
+        };
+
+        document
+          .getElementById("theme-toggle")
+          .addEventListener("click", handleToggleClick);
+      </script>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer>
+      <div>
+        <a href="#">{t("footer.contact")}</a>
+        <a href="#">{t("footer.privacy")}</a>
+        <a href="#">{t("footer.terms")}</a>
+      </div>
+      <p style="margin-top: 1rem;">© 2026 XHAAIT. {t("footer.rights")}</p>
+    </footer>
+  </body>
+</html>

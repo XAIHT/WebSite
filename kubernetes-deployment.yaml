@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: xhaait-deployment
+  labels:
+    app: xhaait
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: xhaait
+  template:
+    metadata:
+      labels:
+        app: xhaait
+    spec:
+      containers:
+      - name: xhaait-container
+        image: angelakimichellle/xhaait:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 4321
+        env:
+        - name: HOST
+          value: "0.0.0.0"
+        - name: PORT
+          value: "4321"
+        - name: HTTPS_KEY_PATH
+          value: "/etc/xhaait/certs/key.pem"
+        - name: HTTPS_CERT_PATH
+          value: "/etc/xhaait/certs/cert.pem"
+        volumeMounts:
+        - name: certs-volume
+          mountPath: "/etc/xhaait/certs"
+          readOnly: true
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+      volumes:
+      - name: certs-volume
+        secret:
+          secretName: xhaait-certs
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: xhaait-service
+spec:
+  type: LoadBalancer # Maps to localhost on Docker Desktop
+  selector:
+    app: xhaait
+  ports:
+  - protocol: TCP
+    name: https
+    port: 4321
+    targetPort: 4321
+  type: LoadBalancer
+---
+# Instructions for HTTPS:
+# 1. Create the secret: 
+#    kubectl create secret generic xhaait-certs --from-file=key.pem="C:\Users\angel\certs\localhost-key.pem" --from-file=cert.pem="C:\Users\angel\certs\localhost.pem"
+# 2. Apply this file:
+#    kubectl apply -f kubernetes-deployment.yaml
+
