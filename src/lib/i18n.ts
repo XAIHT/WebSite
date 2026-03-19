@@ -11,10 +11,10 @@ export const ui = {
     'nav.login': 'Login',
     'nav.panel': 'User Panel',
     'nav.logout': 'Logout',
-    
-    'home.title': 'XHAAIT - Technological Research Company',
+
+    'home.title': 'XAIHT - Technological Research Company',
     'home.subtitle': 'Innovation and Excellence in Technology',
-    'home.welcome': 'Welcome to XHAAIT',
+    'home.welcome': 'Welcome to XAIHT',
     'home.description': 'We are a leading technological research company dedicated to innovation, development, and implementation of cutting-edge solutions.',
     'home.features.title': 'What We Offer',
     'home.features.research': 'Advanced Research',
@@ -24,14 +24,14 @@ export const ui = {
     'home.features.consulting': 'Consulting',
     'home.features.consulting.desc': 'Expert guidance for your technological projects.',
     'home.cta': 'Get Started',
-    
+
     'login.title': 'Login',
     'login.subtitle': 'Access your account',
     'login.email': 'Email',
     'login.password': 'Password',
     'login.submit': 'Sign In',
-    'login.demo': 'Demo credentials: demo@xhaait.com / demo123',
-    
+    'login.demo': 'Demo credentials: demo@xaiht.com / demo123',
+
     'panel.title': 'User Panel',
     'panel.welcome': 'Welcome back',
     'panel.dashboard': 'Dashboard',
@@ -42,7 +42,7 @@ export const ui = {
     'panel.stats.projects': 'Active Projects',
     'panel.stats.tasks': 'Completed Tasks',
     'panel.stats.team': 'Team Members',
-    
+
     'footer.rights': 'All rights reserved.',
     'footer.contact': 'Contact',
     'footer.privacy': 'Privacy Policy',
@@ -53,10 +53,10 @@ export const ui = {
     'nav.login': 'Iniciar Sesión',
     'nav.panel': 'Panel de Usuario',
     'nav.logout': 'Cerrar Sesión',
-    
-    'home.title': 'XHAAIT - Empresa de Investigación Tecnológica',
+
+    'home.title': 'XAIHT - Empresa de Investigación Tecnológica',
     'home.subtitle': 'Innovación y Excelencia en Tecnología',
-    'home.welcome': 'Bienvenido a XHAAIT',
+    'home.welcome': 'Bienvenido a XAIHT',
     'home.description': 'Somos una empresa líder en investigación tecnológica dedicada a la innovación, desarrollo e implementación de soluciones de vanguardia.',
     'home.features.title': 'Qué Ofrecemos',
     'home.features.research': 'Investigación Avanzada',
@@ -66,14 +66,14 @@ export const ui = {
     'home.features.consulting': 'Consultoría',
     'home.features.consulting.desc': 'Asesoramiento experto para sus proyectos tecnológicos.',
     'home.cta': 'Comenzar',
-    
+
     'login.title': 'Iniciar Sesión',
     'login.subtitle': 'Accede a tu cuenta',
     'login.email': 'Correo Electrónico',
     'login.password': 'Contraseña',
     'login.submit': 'Entrar',
-    'login.demo': 'Credenciales de demostración: demo@xhaait.com / demo123',
-    
+    'login.demo': 'Credenciales de demostración: demo@xaiht.com / demo123',
+
     'panel.title': 'Panel de Usuario',
     'panel.welcome': 'Bienvenido de nuevo',
     'panel.dashboard': 'Tablero',
@@ -84,7 +84,7 @@ export const ui = {
     'panel.stats.projects': 'Proyectos Activos',
     'panel.stats.tasks': 'Tareas Completadas',
     'panel.stats.team': 'Miembros del Equipo',
-    
+
     'footer.rights': 'Todos los derechos reservados.',
     'footer.contact': 'Contacto',
     'footer.privacy': 'Política de Privacidad',

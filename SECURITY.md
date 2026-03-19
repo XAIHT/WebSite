@@ -15,7 +15,7 @@
 - **Session-based authentication** using secure, httpOnly cookies
 - **Cryptographically secure session IDs** using `crypto.randomUUID()`
 - **Session expiration** set to 24 hours
-- **Demo credentials** for testing: `demo@xhaait.com` / `demo123`
+- **Demo credentials** for testing: `demo@xaiht.com` / `demo123`
 
 ⚠️ **Production TODO**: Replace hardcoded credentials with:
 - Proper password hashing (bcrypt or argon2)
@@ -116,16 +116,16 @@ Snyk (`^1.1294.0`) is included as a dev dependency and configured in `package.js
 ```bash
 # Scan the Docker image for vulnerabilities (requires image to be built first)
 npm run scan
-# Equivalent to: snyk container test angelakimichellle/xhaait:latest
+# Equivalent to: snyk container test angelakimichellle/xaiht:latest
 ```
 
 **Alternative scanning tools:**
 ```bash
 # Trivy
-trivy image angelakimichellle/xhaait:latest
+trivy image angelakimichellle/xaiht:latest
 
 # Docker Scout (Docker Desktop)
-docker scout cves angelakimichellle/xhaait:latest
+docker scout cves angelakimichellle/xaiht:latest
 ```
 
 **Docker Security Best Practices:**
@@ -140,7 +140,7 @@ docker scout cves angelakimichellle/xhaait:latest
 **Example secure Docker run:**
 ```bash
 docker run -d \
-  --name xhaait \
+  --name xaiht \
   --read-only \
   --tmpfs /tmp \
   --cap-drop ALL \
@@ -149,7 +149,7 @@ docker run -d \
   -e NODE_ENV=production \
   -m 512m \
   --cpus 0.5 \
-  xhaait:latest
+  xaiht:latest
 ```
 
 ### 10. Kubernetes Security
@@ -173,7 +173,7 @@ resources:
 
 volumeMounts:
 - name: certs-volume
-  mountPath: "/etc/xhaait/certs"
+  mountPath: "/etc/xaiht/certs"
   readOnly: true
 ```
 
@@ -199,11 +199,11 @@ securityContext:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: xhaait-netpol
+  name: xaiht-netpol
 spec:
   podSelector:
     matchLabels:
-      app: xhaait
+      app: xaiht
   policyTypes:
   - Ingress
   - Egress
@@ -223,7 +223,7 @@ spec:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: xhaait
+  name: xaiht
   labels:
     pod-security.kubernetes.io/enforce: restricted
     pod-security.kubernetes.io/audit: restricted
@@ -235,28 +235,28 @@ metadata:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: xhaait-sa
+  name: xaiht-sa
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: xhaait-role
+  name: xaiht-role
 rules:
 - apiGroups: [""]
   resources: ["secrets"]
-  resourceNames: ["xhaait-certs"]
+  resourceNames: ["xaiht-certs"]
   verbs: ["get"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: xhaait-rolebinding
+  name: xaiht-rolebinding
 subjects:
 - kind: ServiceAccount
-  name: xhaait-sa
+  name: xaiht-sa
 roleRef:
   kind: Role
-  name: xhaait-role
+  name: xaiht-role
   apiGroup: rbac.authorization.k8s.io
 ```
 
@@ -315,21 +315,21 @@ spec:
       auth:
         kubernetes:
           mountPath: "kubernetes"
-          role: "xhaait-role"
+          role: "xaiht-role"
 ---
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
-  name: xhaait-secrets
+  name: xaiht-secrets
 spec:
   secretStoreRef:
     name: vault-backend
   target:
-    name: xhaait-env-secrets
+    name: xaiht-env-secrets
   data:
   - secretKey: SESSION_SECRET
     remoteRef:
-      key: xhaait/session
+      key: xaiht/session
       property: secret
 ```
 
@@ -517,7 +517,7 @@ Consider implementing rate limiting using:
 sudo apt install certbot
 
 # Generate certificate
-sudo certbot certonly --standalone -d xhaait.com -d www.xhaait.com
+sudo certbot certonly --standalone -d xaiht.com -d www.xaiht.com
 
 # Auto-renewal (add to crontab)
 0 0 * * * certbot renew --quiet
@@ -536,7 +536,7 @@ metadata:
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
-    email: admin@xhaait.com
+    email: admin@xaiht.com
     privateKeySecretRef:
       name: letsencrypt-prod
     solvers:
@@ -548,15 +548,15 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: xhaait-tls
+  name: xaiht-tls
 spec:
-  secretName: xhaait-certs
+  secretName: xaiht-certs
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
   dnsNames:
-  - xhaait.com
-  - www.xhaait.com
+  - xaiht.com
+  - www.xaiht.com
 ```
 
 **Option 3: Cloud Provider Certificate Managers**
@@ -673,7 +673,7 @@ logger.info('Login attempt', {
 
 ## Vulnerability Disclosure
 
-If you discover a security vulnerability, please email security@xhaait.com with:
+If you discover a security vulnerability, please email security@xaiht.com with:
 - Description of the vulnerability
 - Steps to reproduce
 - Potential impact

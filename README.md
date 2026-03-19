@@ -1,4 +1,4 @@
-# XHAAIT - Technological Research Company Website
+# XAIHT - Technological Research Company Website
 
 A secure, multilingual web application built with [Astro](https://astro.build/) for a technological research company. The site supports English and Spanish languages and includes a landing page, login system, and user panel. It ships with a custom Node.js server supporting HTTP/HTTPS, Docker multi-stage builds, Kubernetes manifests, and a Jenkins CI/CD pipeline.
 
@@ -27,8 +27,8 @@ A secure, multilingual web application built with [Astro](https://astro.build/) 
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/angelahack1/XHAAIT.git
-cd XHAAIT
+git clone https://github.com/angelahack1/XAIHT.git
+cd XAIHT
 ```
 
 2. Install dependencies:
@@ -90,7 +90,7 @@ The application will be available at `http://localhost:4321`
 
 ### Authentication
 - Session-based authentication using secure, httpOnly cookies
-- Demo credentials: `demo@xhaait.com` / `demo123`
+- Demo credentials: `demo@xaiht.com` / `demo123`
 - Protected routes with automatic redirect to login
 
 ### Security Headers
@@ -195,7 +195,7 @@ docker run -p 4321:4321 \
   -e HTTPS_CERT_PATH=/etc/certs/cert.pem \
   -e NODE_ENV=production \
   -v /path/to/certs:/etc/certs:ro \
-  xhaait:latest
+  xaiht:latest
 ```
 
 **In Kubernetes:**
@@ -211,7 +211,7 @@ Use Nginx or Caddy for SSL termination and additional features:
 **With Nginx and Let's Encrypt:**
 ```bash
 # Get certificate
-sudo certbot --nginx -d xhaait.com
+sudo certbot --nginx -d xaiht.com
 
 # Nginx will automatically proxy to http://localhost:4321
 # See DEPLOYMENT.md for complete Nginx configuration
@@ -222,7 +222,7 @@ sudo certbot --nginx -d xhaait.com
 # docker-compose.yml
 version: '3.8'
 services:
-  xhaait:
+  xaiht:
     build: .
     expose:
       - 4321
@@ -244,8 +244,8 @@ volumes:
 
 ```caddyfile
 # Caddyfile
-xhaait.com {
-    reverse_proxy xhaait:4321
+xaiht.com {
+    reverse_proxy xaiht:4321
 }
 ```
 
@@ -298,17 +298,17 @@ The project supports multiple deployment options:
 **Build and run:**
 ```bash
 # Build Docker image
-docker build -t xhaait:latest .
+docker build -t xaiht:latest .
 
 # Run container (HTTP)
-docker run -p 4321:4321 xhaait:latest
+docker run -p 4321:4321 xaiht:latest
 
 # Run container (HTTPS)
 docker run -p 4321:4321 \
   -e HTTPS_KEY_PATH=/etc/certs/key.pem \
   -e HTTPS_CERT_PATH=/etc/certs/cert.pem \
   -v /path/to/certs:/etc/certs:ro \
-  xhaait:latest
+  xaiht:latest
 ```
 
 ### 2. Kubernetes
@@ -316,10 +316,10 @@ docker run -p 4321:4321 \
 **Deploy to Kubernetes:**
 ```bash
 # Build and load image (for local K8s)
-docker build -t xhaait:latest .
+docker build -t xaiht:latest .
 
 # Create certificate secret
-kubectl create secret generic xhaait-certs \
+kubectl create secret generic xaiht-certs \
   --from-file=key.pem=/path/to/key.pem \
   --from-file=cert.pem=/path/to/cert.pem
 
@@ -327,7 +327,7 @@ kubectl create secret generic xhaait-certs \
 kubectl apply -f kubernetes-deployment.yaml
 
 # Access via LoadBalancer
-kubectl get service xhaait-service
+kubectl get service xaiht-service
 ```
 
 **Features:**
@@ -388,7 +388,7 @@ For detailed deployment instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md).
 
 ## Demo Credentials
 
-- **Email**: demo@xhaait.com
+- **Email**: demo@xaiht.com
 - **Password**: demo123
 
 ## Tech Stack
@@ -429,8 +429,8 @@ For the complete security checklist and documentation, see [SECURITY.md](./SECUR
 
 ## License
 
-All rights reserved - XHAAIT 2026-2027
+All rights reserved - XAIHT 2026-2027
 
 ## Contributing
 
-This is a private project for XHAAIT. For questions or support, contact the development team.
+This is a private project for XAIHT. For questions or support, contact the development team.

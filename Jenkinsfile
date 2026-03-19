@@ -9,9 +9,9 @@ pipeline {
                 bat 'pause 10'
                 bat 'kubectl delete -f kubernetes-deployment.yaml --ignore-not-found=true'
                 bat 'pause 10'
-                bat 'docker image rm -f angelakimichellle/xhaait:latest 2>nul || exit 0'
+                bat 'docker image rm -f angelakimichellle/xaiht:latest 2>nul || exit 0'
                 bat 'pause 10'
-                bat 'docker image rm -f angelakimichellle/xhaait:latest 2>nul || exit 0'
+                bat 'docker image rm -f angelakimichellle/xaiht:latest 2>nul || exit 0'
             }
         }
 

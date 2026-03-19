@@ -74,7 +74,7 @@ The project includes a **multi-stage Dockerfile** optimized for production:
 
 **Build:**
 ```bash
-docker build -t xhaait:latest .
+docker build -t xaiht:latest .
 ```
 
 **Run (HTTP):**
@@ -83,7 +83,7 @@ docker run -p 4321:4321 \
   -e NODE_ENV=production \
   -e HOST=0.0.0.0 \
   -e PORT=4321 \
-  xhaait:latest
+  xaiht:latest
 ```
 
 **Run (HTTPS with certificates):**
@@ -95,14 +95,14 @@ docker run -p 4321:4321 \
   -e HTTPS_KEY_PATH=/etc/certs/key.pem \
   -e HTTPS_CERT_PATH=/etc/certs/cert.pem \
   -v /path/to/local/certs:/etc/certs:ro \
-  xhaait:latest
+  xaiht:latest
 ```
 
 **Docker Compose Example:**
 ```yaml
 version: '3.8'
 services:
-  xhaait:
+  xaiht:
     build: .
     ports:
       - "4321:4321"
@@ -131,10 +131,10 @@ The project includes a complete Kubernetes deployment configuration (`kubernetes
 For local Kubernetes (Docker Desktop/Minikube):
 ```bash
 # Build the image
-docker build -t xhaait:latest .
+docker build -t xaiht:latest .
 
 # For Minikube, load into cluster
-minikube image load xhaait:latest
+minikube image load xaiht:latest
 
 # For Docker Desktop, image is automatically available
 ```
@@ -142,8 +142,8 @@ minikube image load xhaait:latest
 For cloud Kubernetes:
 ```bash
 # Tag and push to registry
-docker tag xhaait:latest your-registry/xhaait:latest
-docker push your-registry/xhaait:latest
+docker tag xaiht:latest your-registry/xaiht:latest
+docker push your-registry/xaiht:latest
 
 # Update kubernetes-deployment.yaml image field
 ```
@@ -152,12 +152,12 @@ docker push your-registry/xhaait:latest
 
 ```bash
 # Create Kubernetes secret from certificate files
-kubectl create secret generic xhaait-certs \
+kubectl create secret generic xaiht-certs \
   --from-file=key.pem=/path/to/your/key.pem \
   --from-file=cert.pem=/path/to/your/cert.pem
 
 # Verify secret creation
-kubectl get secrets xhaait-certs
+kubectl get secrets xaiht-certs
 ```
 
 **Step 3: Deploy to Kubernetes**
@@ -172,7 +172,7 @@ kubectl get pods
 kubectl get services
 
 # View logs
-kubectl logs -l app=xhaait -f
+kubectl logs -l app=xaiht -f
 ```
 
 **Step 4: Access the Application**
@@ -180,7 +180,7 @@ kubectl logs -l app=xhaait -f
 For LoadBalancer service:
 ```bash
 # Get external IP/port
-kubectl get service xhaait-service
+kubectl get service xaiht-service
 
 # On Docker Desktop, access via localhost:4321
 # On cloud providers, use the external IP provided
@@ -197,22 +197,22 @@ kubectl get service xhaait-service
 **Scaling:**
 ```bash
 # Scale deployment
-kubectl scale deployment xhaait-deployment --replicas=3
+kubectl scale deployment xaiht-deployment --replicas=3
 
 # Enable autoscaling
-kubectl autoscale deployment xhaait-deployment --min=2 --max=10 --cpu-percent=80
+kubectl autoscale deployment xaiht-deployment --min=2 --max=10 --cpu-percent=80
 ```
 
 **Updating Deployment:**
 ```bash
 # After rebuilding Docker image
-kubectl rollout restart deployment xhaait-deployment
+kubectl rollout restart deployment xaiht-deployment
 
 # Check rollout status
-kubectl rollout status deployment xhaait-deployment
+kubectl rollout status deployment xaiht-deployment
 
 # Rollback if needed
-kubectl rollout undo deployment xhaait-deployment
+kubectl rollout undo deployment xaiht-deployment
 ```
 
 **Troubleshooting Kubernetes:**
@@ -227,7 +227,7 @@ kubectl logs <pod-name>
 kubectl exec -it <pod-name> -- /bin/sh
 
 # Check secret mounting
-kubectl exec -it <pod-name> -- ls -la /etc/xhaait/certs
+kubectl exec -it <pod-name> -- ls -la /etc/xaiht/certs
 ```
 
 ### 4. Cloud Platforms
@@ -243,8 +243,8 @@ kubectl exec -it <pod-name> -- ls -la /etc/xhaait/certs
 ```bash
 # Push image to ECR
 aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <account-id>.dkr.ecr.us-east-1.amazonaws.com
-docker tag xhaait:latest <account-id>.dkr.ecr.us-east-1.amazonaws.com/xhaait:latest
-docker push <account-id>.dkr.ecr.us-east-1.amazonaws.com/xhaait:latest
+docker tag xaiht:latest <account-id>.dkr.ecr.us-east-1.amazonaws.com/xaiht:latest
+docker push <account-id>.dkr.ecr.us-east-1.amazonaws.com/xaiht:latest
 
 # Deploy using ECS task definition
 ```
@@ -253,22 +253,22 @@ docker push <account-id>.dkr.ecr.us-east-1.amazonaws.com/xhaait:latest
 ```bash
 # Push to Google Container Registry
 gcloud auth configure-docker
-docker tag xhaait:latest gcr.io/<project-id>/xhaait:latest
-docker push gcr.io/<project-id>/xhaait:latest
+docker tag xaiht:latest gcr.io/<project-id>/xaiht:latest
+docker push gcr.io/<project-id>/xaiht:latest
 
 # Deploy
-gcloud run deploy xhaait --image gcr.io/<project-id>/xhaait:latest --platform managed --region us-central1 --allow-unauthenticated
+gcloud run deploy xaiht --image gcr.io/<project-id>/xaiht:latest --platform managed --region us-central1 --allow-unauthenticated
 ```
 
 **Azure Container Instances:**
 ```bash
 # Push to Azure Container Registry
 az acr login --name <registry-name>
-docker tag xhaait:latest <registry-name>.azurecr.io/xhaait:latest
-docker push <registry-name>.azurecr.io/xhaait:latest
+docker tag xaiht:latest <registry-name>.azurecr.io/xaiht:latest
+docker push <registry-name>.azurecr.io/xaiht:latest
 
 # Deploy
-az container create --resource-group myResourceGroup --name xhaait --image <registry-name>.azurecr.io/xhaait:latest --dns-name-label xhaait --ports 4321
+az container create --resource-group myResourceGroup --name xaiht --image <registry-name>.azurecr.io/xaiht:latest --dns-name-label xaiht --ports 4321
 ```
 
 **DigitalOcean App Platform:**
@@ -291,10 +291,10 @@ az container create --resource-group myResourceGroup --name xhaait --image <regi
 ```nginx
 server {
     listen 443 ssl http2;
-    server_name xhaait.com;
+    server_name xaiht.com;
 
-    ssl_certificate /etc/letsencrypt/live/xhaait.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/xhaait.com/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/xaiht.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/xaiht.com/privkey.pem;
     
     # Security headers
     add_header X-Frame-Options "DENY" always;
@@ -320,7 +320,7 @@ server {
 
 server {
     listen 80;
-    server_name xhaait.com;
+    server_name xaiht.com;
     return 301 https://$server_name$request_uri;
 }
 ```
@@ -400,15 +400,15 @@ server {
 apiVersion: v1
 kind: Service
 metadata:
-  name: xhaait-metrics
+  name: xaiht-metrics
   labels:
-    app: xhaait
+    app: xaiht
 spec:
   ports:
   - port: 9090
     name: metrics
   selector:
-    app: xhaait
+    app: xaiht
 ```
 
 ### Health Check Endpoints
@@ -457,7 +457,7 @@ readinessProbe:
 2. **Container volumes**:
    ```bash
    # Backup named volumes
-   docker run --rm -v xhaait_data:/data -v $(pwd):/backup alpine tar czf /backup/data_backup.tar.gz -C /data .
+   docker run --rm -v xaiht_data:/data -v $(pwd):/backup alpine tar czf /backup/data_backup.tar.gz -C /data .
    ```
 
 3. **Configuration files**:
@@ -472,7 +472,7 @@ readinessProbe:
    kubectl get all --all-namespaces -o yaml > cluster_backup.yaml
 
    # Backup specific deployment
-   kubectl get deployment xhaait-deployment -o yaml > deployment_backup.yaml
+   kubectl get deployment xaiht-deployment -o yaml > deployment_backup.yaml
    ```
 
 2. **Secrets and ConfigMaps**:
@@ -487,7 +487,7 @@ readinessProbe:
 3. **Persistent volumes**:
    ```bash
    # Use velero for comprehensive backup
-   velero backup create xhaait-backup --include-namespaces default
+   velero backup create xaiht-backup --include-namespaces default
    ```
 
 4. **SSL certificates**:
@@ -511,7 +511,7 @@ kubectl get all --all-namespaces -o yaml > $BACKUP_DIR/k8s_all.yaml
 kubectl get secrets -o yaml > $BACKUP_DIR/k8s_secrets.yaml
 
 # Docker images
-docker save xhaait:latest | gzip > $BACKUP_DIR/xhaait_image.tar.gz
+docker save xaiht:latest | gzip > $BACKUP_DIR/xaiht_image.tar.gz
 
 # Configuration
 cp kubernetes-deployment.yaml $BACKUP_DIR/
@@ -577,10 +577,10 @@ mkcert -key-file certs/localhost-key.pem -cert-file certs/localhost.pem localhos
 docker builder prune
 
 # Build without cache
-docker build --no-cache -t xhaait:latest .
+docker build --no-cache -t xaiht:latest .
 
 # Check build logs
-docker build -t xhaait:latest . 2>&1 | tee build.log
+docker build -t xaiht:latest . 2>&1 | tee build.log
 ```
 
 **Container won't start:**
@@ -592,13 +592,13 @@ docker logs <container-id>
 docker inspect <container-id>
 
 # Run interactively for debugging
-docker run -it --entrypoint /bin/sh xhaait:latest
+docker run -it --entrypoint /bin/sh xaiht:latest
 ```
 
 **Certificate mounting issues:**
 ```bash
 # Verify volume mount
-docker run -it -v /path/to/certs:/etc/certs:ro xhaait:latest ls -la /etc/certs
+docker run -it -v /path/to/certs:/etc/certs:ro xaiht:latest ls -la /etc/certs
 
 # Check file permissions
 ls -la /path/to/certs
@@ -628,10 +628,10 @@ kubectl get events --sort-by='.lastTimestamp'
 **Image pull errors:**
 ```bash
 # For local images on Docker Desktop
-docker images | grep xhaait
+docker images | grep xaiht
 
 # For Minikube, load image
-minikube image load xhaait:latest
+minikube image load xaiht:latest
 
 # For cloud, check registry authentication
 kubectl get secret regcred --output=yaml
@@ -640,26 +640,26 @@ kubectl get secret regcred --output=yaml
 **Certificate secret issues:**
 ```bash
 # Verify secret exists
-kubectl get secrets xhaait-certs
+kubectl get secrets xaiht-certs
 
 # Check secret contents (base64 encoded)
-kubectl get secret xhaait-certs -o yaml
+kubectl get secret xaiht-certs -o yaml
 
 # Delete and recreate if needed
-kubectl delete secret xhaait-certs
-kubectl create secret generic xhaait-certs --from-file=key.pem=./key.pem --from-file=cert.pem=./cert.pem
+kubectl delete secret xaiht-certs
+kubectl create secret generic xaiht-certs --from-file=key.pem=./key.pem --from-file=cert.pem=./cert.pem
 ```
 
 **Service not accessible:**
 ```bash
 # Check service configuration
-kubectl get service xhaait-service
+kubectl get service xaiht-service
 
 # Port forward for testing
-kubectl port-forward service/xhaait-service 4321:4321
+kubectl port-forward service/xaiht-service 4321:4321
 
 # Check endpoints
-kubectl get endpoints xhaait-service
+kubectl get endpoints xaiht-service
 ```
 
 **High memory/CPU usage:**
@@ -692,7 +692,7 @@ kubectl describe pod <pod-name> | grep -A 5 "Limits"
 - Verify session secret is set
 
 **Authentication not working:**
-- Check demo credentials: demo@xhaait.com / demo123
+- Check demo credentials: demo@xaiht.com / demo123
 - Verify session middleware is running
 - Check cookie is being set (DevTools → Application → Cookies)
 - Ensure HTTPS for secure cookies in production
@@ -751,22 +751,22 @@ jobs:
       run: npm run build:server
 
     - name: Build Docker image
-      run: docker build -t xhaait:${{ github.sha }} .
+      run: docker build -t xaiht:${{ github.sha }} .
 
     - name: Push to registry
       if: github.ref == 'refs/heads/main'
       run: |
         echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login -u "${{ secrets.REGISTRY_USERNAME }}" --password-stdin
-        docker tag xhaait:${{ github.sha }} your-registry/xhaait:latest
-        docker push your-registry/xhaait:latest
+        docker tag xaiht:${{ github.sha }} your-registry/xaiht:latest
+        docker push your-registry/xaiht:latest
 
     - name: Deploy to Kubernetes
       if: github.ref == 'refs/heads/main'
       run: |
         echo "${{ secrets.KUBECONFIG }}" > kubeconfig
         export KUBECONFIG=kubeconfig
-        kubectl set image deployment/xhaait-deployment xhaait-container=your-registry/xhaait:latest
-        kubectl rollout status deployment/xhaait-deployment
+        kubectl set image deployment/xaiht-deployment xaiht-container=your-registry/xaiht:latest
+        kubectl rollout status deployment/xaiht-deployment
 ```
 
 ### GitLab CI Example
@@ -807,8 +807,8 @@ deploy-production:
   stage: deploy
   image: bitnami/kubectl:latest
   script:
-    - kubectl set image deployment/xhaait-deployment xhaait-container=$DOCKER_IMAGE
-    - kubectl rollout status deployment/xhaait-deployment
+    - kubectl set image deployment/xaiht-deployment xaiht-container=$DOCKER_IMAGE
+    - kubectl rollout status deployment/xaiht-deployment
   only:
     - main
 ```
@@ -870,5 +870,5 @@ For deployment issues:
    - Stack Overflow: Tag with `astro`, `docker`, `kubernetes`
 
 4. **Development Team**:
-   - For XHAAIT-specific issues, contact the development team
-   - Security issues: security@xhaait.com
+   - For XAIHT-specific issues, contact the development team
+   - Security issues: security@xaiht.com

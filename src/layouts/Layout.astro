@@ -6,7 +6,7 @@ interface Props {
   description?: string;
 }
 
-const { title, description = "XHAAIT - Technological Research Company" } =
+const { title, description = "XAIHT - Technological Research Company" } =
   Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -249,14 +249,15 @@ const isLoggedIn = Astro.cookies.get("session")?.value;
   <body>
     <header>
       <nav>
-        <a href={`/${lang}`} class="logo">XHAAIT</a>
+        <a href={`/${lang}`} class="logo">XAIHT</a>
         <ul class="nav-links">
           <li>
             <a
               href={`/${lang}`}
               class={currentPath === `/${lang}` || currentPath === `/${lang}/`
                 ? "active"
-                : ""}>{t("nav.home")}</a>
+                : ""}>{t("nav.home")}</a
+            >
           </li>
           {
             !isLoggedIn && (
@@ -374,7 +375,7 @@ const isLoggedIn = Astro.cookies.get("session")?.value;
         <a href="#">{t("footer.privacy")}</a>
         <a href="#">{t("footer.terms")}</a>
       </div>
-      <p style="margin-top: 1rem;">© 2026 XHAAIT. {t("footer.rights")}</p>
+      <p style="margin-top: 1rem;">© 2026 XAIHT. {t("footer.rights")}</p>
     </footer>
   </body>
 </html>

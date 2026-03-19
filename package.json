@@ -1,5 +1,5 @@
 {
-  "name": "xhaait",
+  "name": "xaiht",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -9,7 +9,7 @@
     "build:server": "esbuild server.ts --bundle --platform=node --target=node18 --format=esm --external:./dist/* --outfile=server.js",
     "preview": "astro preview",
     "astro": "astro",
-    "scan": "snyk container test angelakimichellle/xhaait:latest"
+    "scan": "snyk container test angelakimichellle/xaiht:latest"
   },
   "dependencies": {
     "@astrojs/node": "^9.1.0",

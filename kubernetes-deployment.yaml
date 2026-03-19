@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: xhaait-deployment
+  name: xaiht-deployment
   labels:
-    app: xhaait
+    app: xaiht
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: xhaait
+      app: xaiht
   template:
     metadata:
       labels:
-        app: xhaait
+        app: xaiht
     spec:
       containers:
-      - name: xhaait-container
-        image: angelakimichellle/xhaait:latest
+      - name: xaiht-container
+        image: angelakimichellle/xaiht:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 4321
@@ -26,12 +26,12 @@ spec:
         - name: PORT
           value: "4321"
         - name: HTTPS_KEY_PATH
-          value: "/etc/xhaait/certs/key.pem"
+          value: "/etc/xaiht/certs/key.pem"
         - name: HTTPS_CERT_PATH
-          value: "/etc/xhaait/certs/cert.pem"
+          value: "/etc/xaiht/certs/cert.pem"
         volumeMounts:
         - name: certs-volume
-          mountPath: "/etc/xhaait/certs"
+          mountPath: "/etc/xaiht/certs"
           readOnly: true
         resources:
           limits:
@@ -43,16 +43,16 @@ spec:
       volumes:
       - name: certs-volume
         secret:
-          secretName: xhaait-certs
+          secretName: xaiht-certs
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: xhaait-service
+  name: xaiht-service
 spec:
   type: LoadBalancer # Maps to localhost on Docker Desktop
   selector:
-    app: xhaait
+    app: xaiht
   ports:
   - protocol: TCP
     name: https
@@ -62,7 +62,7 @@ spec:
 ---
 # Instructions for HTTPS:
 # 1. Create the secret: 
-#    kubectl create secret generic xhaait-certs --from-file=key.pem="C:\Users\angel\certs\localhost-key.pem" --from-file=cert.pem="C:\Users\angel\certs\localhost.pem"
+#    kubectl create secret generic xaiht-certs --from-file=key.pem="C:\Users\angel\certs\localhost-key.pem" --from-file=cert.pem="C:\Users\angel\certs\localhost.pem"
 # 2. Apply this file:
 #    kubectl apply -f kubernetes-deployment.yaml
 
