@@ -1,4 +1,4 @@
-# XHAAIT - Technological Research Company Website
+# XAIHT - eXtended Artificial Intelligence Humanly Tempered
 
 A secure, multilingual web application built with [Astro](https://astro.build/) for a technological research company. The site supports English and Spanish languages and includes a landing page, login system, and user panel. It ships with a custom Node.js server supporting HTTP/HTTPS, Docker multi-stage builds, Kubernetes manifests, and a Jenkins CI/CD pipeline.
 
