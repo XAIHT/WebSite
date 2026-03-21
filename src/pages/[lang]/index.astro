@@ -1,9 +1,13 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { useTranslations } from '../../lib/i18n';
+import { useTranslations, languages } from '../../lib/i18n';
 
-const lang = 'es';
-const t = useTranslations(lang);
+const { lang } = Astro.params;
+if (!lang || !(lang in languages)) {
+  return Astro.redirect('/404');
+}
+const locale = lang as keyof typeof languages;
+const t = useTranslations(locale);
 ---
 
 <Layout title={t('home.title')} description={t('home.description')}>
@@ -11,7 +15,7 @@ const t = useTranslations(lang);
     <h1>{t('home.welcome')}</h1>
     <p class="subtitle">{t('home.subtitle')}</p>
     <p class="description">{t('home.description')}</p>
-    <a href={`/${lang}/login`} class="cta-button">{t('home.cta')}</a>
+    <a href={`/${locale}/login`} class="cta-button">{t('home.cta')}</a>
   </div>
   
   <section class="features">

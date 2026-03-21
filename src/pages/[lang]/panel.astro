@@ -1,14 +1,18 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { useTranslations } from "../../lib/i18n";
+import { useTranslations, languages } from "../../lib/i18n";
 
-const lang = "es";
-const t = useTranslations(lang);
+const { lang } = Astro.params;
+if (!lang || !(lang in languages)) {
+  return Astro.redirect('/404');
+}
+const locale = lang as keyof typeof languages;
+const t = useTranslations(locale);
 
 // Check authentication
 const session = Astro.cookies.get("session");
 if (!session?.value) {
-  return Astro.redirect(`/${lang}/login`);
+  return Astro.redirect(`/${locale}/login`);
 }
 ---
 
@@ -67,12 +71,12 @@ if (!session?.value) {
             <span class="value">demo@xaiht.com</span>
           </div>
           <div class="info-item">
-            <span class="label">Rol:</span>
-            <span class="value">Investigador</span>
+            <span class="label">Role:</span>
+            <span class="value">Researcher</span>
           </div>
           <div class="info-item">
-            <span class="label">Departamento:</span>
-            <span class="value">Tecnología Avanzada</span>
+            <span class="label">Department:</span>
+            <span class="value">Advanced Technology</span>
           </div>
         </div>
       </div>
@@ -83,15 +87,15 @@ if (!session?.value) {
         <div class="settings-options">
           <label class="setting-item">
             <input type="checkbox" checked />
-            <span>Notificaciones por correo</span>
+            <span>Email notifications</span>
           </label>
           <label class="setting-item">
             <input type="checkbox" checked />
-            <span>Actualizaciones de proyectos</span>
+            <span>Project updates</span>
           </label>
           <label class="setting-item">
             <input type="checkbox" />
-            <span>Correos de marketing</span>
+            <span>Marketing emails</span>
           </label>
         </div>
       </div>
@@ -100,10 +104,10 @@ if (!session?.value) {
         <h2>📁 {t("panel.projects")}</h2>
         <p>Access your active research projects.</p>
         <ul class="project-list">
-          <li>🔬 Investigación en Computación Cuántica</li>
-          <li>🤖 Estudio de Ética en IA</li>
-          <li>🌐 Análisis de Sistemas Distribuidos</li>
-          <li>🔐 Implementación Criptográfica</li>
+          <li>🔬 Quantum Computing Research</li>
+          <li>🤖 AI Ethics Study</li>
+          <li>🌐 Distributed Systems Analysis</li>
+          <li>🔐 Cryptography Implementation</li>
         </ul>
       </div>
     </div>

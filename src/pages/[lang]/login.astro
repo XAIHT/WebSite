@@ -1,75 +1,66 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { useTranslations } from "../../lib/i18n";
+import { useTranslations, languages } from "../../lib/i18n";
 
-const lang = "en";
-const t = useTranslations(lang);
+const { lang } = Astro.params;
+if (!lang || !(lang in languages)) {
+  return Astro.redirect('/404');
+}
+const locale = lang as keyof typeof languages;
+const t = useTranslations(locale);
 
 // Handle form submission
 let error = "";
-let name = "";
 let email = "";
-
 if (Astro.request.method === "POST") {
   const formData = await Astro.request.formData();
-  name = formData.get("name")?.toString().trim() || "";
   email = formData.get("email")?.toString().trim() || "";
   const password = formData.get("password")?.toString();
-  const confirmPassword = formData.get("confirm_password")?.toString();
 
   // Basic validation
-  if (!name || !email || !password || !confirmPassword) {
-    error = "Please fill out all fields";
-  } else if (password !== confirmPassword) {
-    error = "Passwords do not match";
+  if (!email || !password) {
+    error = "Invalid credentials";
   } else {
     // Email format validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       error = "Invalid email format";
     } else {
-      // Demo successful registration logic
-      // TODO: Replace with secure user creation in database
-      const sessionId = crypto.randomUUID();
+      // Simple demo authentication (in production, use proper authentication with hashed passwords)
+      // TODO: Replace with secure password hashing (bcrypt/argon2) and database lookup
+      if (email === "demo@xaiht.com" && password === "demo123") {
+        // Generate cryptographically secure session ID
+        const sessionId = crypto.randomUUID();
 
-      Astro.cookies.set("session", sessionId, {
-        httpOnly: true,
-        secure: import.meta.env.PROD,
-        sameSite: "strict",
-        path: "/",
-        maxAge: 60 * 60 * 24, // 24 hours
-      });
+        // Set secure session cookie
+        Astro.cookies.set("session", sessionId, {
+          httpOnly: true,
+          secure: import.meta.env.PROD,
+          sameSite: "strict",
+          path: "/",
+          maxAge: 60 * 60 * 24, // 24 hours
+        });
 
-      return Astro.redirect(`/${lang}/panel`);
+        return Astro.redirect(`/${locale}/panel`);
+      } else {
+        error = "Invalid email or password";
+      }
     }
   }
 }
 ---
 
-<Layout title={t("register.title")}>
+<Layout title={t("login.title")}>
   <div class="login-container">
     <div class="login-card">
-      <h1>{t("register.title")}</h1>
-      <p class="subtitle">{t("register.subtitle")}</p>
+      <h1>{t("login.title")}</h1>
+      <p class="subtitle">{t("login.subtitle")}</p>
 
       {error && <div class="error-message">{error}</div>}
 
       <form method="POST" class="login-form">
         <div class="form-group">
-          <label for="name">{t("register.name")}</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            required
-            autocomplete="name"
-            placeholder="John Doe"
-            value={name}
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="email">{t("register.email")}</label>
+          <label for="email">{t("login.email")}</label>
           <input
             type="email"
             id="email"
@@ -82,30 +73,18 @@ if (Astro.request.method === "POST") {
         </div>
 
         <div class="form-group">
-          <label for="password">{t("register.password")}</label>
+          <label for="password">{t("login.password")}</label>
           <input
             type="password"
             id="password"
             name="password"
             required
-            autocomplete="new-password"
-            placeholder="••••••••"
+            autocomplete="current-password"
+            placeholder="demo123"
           />
         </div>
 
-        <div class="form-group">
-          <label for="confirm_password">{t("register.confirm_password")}</label>
-          <input
-            type="password"
-            id="confirm_password"
-            name="confirm_password"
-            required
-            autocomplete="new-password"
-            placeholder="••••••••"
-          />
-        </div>
-
-        <button type="submit" class="submit-button">{t("register.submit")}</button>
+        <button type="submit" class="submit-button">{t("login.submit")}</button>
       </form>
 
       <div class="divider">or</div>
@@ -118,11 +97,11 @@ if (Astro.request.method === "POST") {
           <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
           <path fill="none" d="M0 0h48v48H0z"/>
         </svg>
-        {t("register.google")}
+        {t("login.google")}
       </button>
 
       <p class="auth-switch">
-        {t("register.has_account")} <a href={`/${lang}/login`}>{t("login.submit")}</a>
+        {t("login.no_account")} <a href={`/${locale}/register`}>{t("register.submit")}</a>
       </p>
     </div>
   </div>
