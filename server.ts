@@ -1,8 +1,17 @@
 import fs from 'fs';
 import https from 'https';
 import http from 'http';
+import express from 'express';
 // @ts-ignore
 import { handler as astroHandler } from './dist/server/entry.mjs';
+
+const app = express();
+
+// Serve static assets from the Astro build output directory
+app.use(express.static('dist/client'));
+
+// Handle SSR routes with Astro
+app.use(astroHandler as any);
 
 const HOST = process.env.HOST || '0.0.0.0';
 const PORT = Number(process.env.PORT) || 4321;
@@ -25,14 +34,14 @@ if (HTTPS_KEY_PATH && HTTPS_CERT_PATH && fs.existsSync(HTTPS_KEY_PATH) && fs.exi
             key: fs.readFileSync(HTTPS_KEY_PATH),
             cert: fs.readFileSync(HTTPS_CERT_PATH)
         };
-        server = https.createServer(options, astroHandler);
+        server = https.createServer(options, app);
     } catch (err) {
         console.error('Failed to load certificates:', err);
         process.exit(1);
     }
 } else {
     console.log('Certificates not found or not configured. Initializing HTTP server...');
-    server = http.createServer(astroHandler);
+    server = http.createServer(app);
 }
 
 server.listen(PORT, HOST, () => {

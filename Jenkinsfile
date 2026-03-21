@@ -5,6 +5,7 @@ pipeline {
         stage('Clean Project') {
             steps {
                 echo '--- Cleaning the project ---'
+                bat 'kubectl delete secret xaiht-certs --ignore-not-found=true'
                 bat 'kubectl delete -f kubernetes-deployment.yaml --ignore-not-found=true'
                 bat 'pause 10'
                 bat 'kubectl delete -f kubernetes-deployment.yaml --ignore-not-found=true'
@@ -18,6 +19,7 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 echo '--- Deploying to Kubernetes ---'
+                bat 'kubectl create secret generic xaiht-certs --from-file=key.pem="C:\\Users\\angel\\certs\\localhost-key.pem" --from-file=cert.pem="C:\\Users\\angel\\certs\\localhost.pem"'
                 bat 'kubectl apply -f kubernetes-deployment.yaml'
             }
         }
