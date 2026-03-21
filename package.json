@@ -6,7 +6,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro check && astro build",
-    "build:server": "esbuild server.ts --bundle --platform=node --target=node18 --format=esm --external:./dist/* --outfile=server.js",
+    "build:server": "esbuild server.ts --bundle --platform=node --target=node18 --format=esm --external:./dist/* --packages=external --outfile=server.js",
     "preview": "astro preview",
     "astro": "astro",
     "scan": "snyk container test angelakimichellle/xaiht:latest"
