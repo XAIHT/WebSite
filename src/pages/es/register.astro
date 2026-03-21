@@ -7,56 +7,69 @@ const t = useTranslations(lang);
 
 // Handle form submission
 let error = "";
+let name = "";
 let email = "";
+
 if (Astro.request.method === "POST") {
   const formData = await Astro.request.formData();
+  name = formData.get("name")?.toString().trim() || "";
   email = formData.get("email")?.toString().trim() || "";
   const password = formData.get("password")?.toString();
+  const confirmPassword = formData.get("confirm_password")?.toString();
 
   // Basic validation
-  if (!email || !password) {
-    error = "Credenciales inválidas";
+  if (!name || !email || !password || !confirmPassword) {
+    error = "Por favor, completa todos los campos";
+  } else if (password !== confirmPassword) {
+    error = "Las contraseñas no coinciden";
   } else {
     // Email format validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       error = "Formato de correo electrónico no válido";
     } else {
-      // Simple demo authentication (in production, use proper authentication with hashed passwords)
-      // TODO: Replace with secure password hashing (bcrypt/argon2) and database lookup
-      if (email === "demo@xaiht.com" && password === "demo123") {
-        // Generate cryptographically secure session ID
-        const sessionId = crypto.randomUUID();
+      // Demo successful registration logic
+      // TODO: Replace with secure user creation in database
+      const sessionId = crypto.randomUUID();
 
-        // Set secure session cookie
-        Astro.cookies.set("session", sessionId, {
-          httpOnly: true,
-          secure: import.meta.env.PROD,
-          sameSite: "strict",
-          path: "/",
-          maxAge: 60 * 60 * 24, // 24 hours
-        });
+      Astro.cookies.set("session", sessionId, {
+        httpOnly: true,
+        secure: import.meta.env.PROD,
+        sameSite: "strict",
+        path: "/",
+        maxAge: 60 * 60 * 24, // 24 hours
+      });
 
-        return Astro.redirect(`/${lang}/panel`);
-      } else {
-        error = "Correo electrónico o contraseña inválidos";
-      }
+      return Astro.redirect(`/${lang}/panel`);
     }
   }
 }
 ---
 
-<Layout title={t("login.title")}>
+<Layout title={t("register.title")}>
   <div class="login-container">
     <div class="login-card">
-      <h1>{t("login.title")}</h1>
-      <p class="subtitle">{t("login.subtitle")}</p>
+      <h1>{t("register.title")}</h1>
+      <p class="subtitle">{t("register.subtitle")}</p>
 
       {error && <div class="error-message">{error}</div>}
 
       <form method="POST" class="login-form">
         <div class="form-group">
-          <label for="email">{t("login.email")}</label>
+          <label for="name">{t("register.name")}</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            autocomplete="name"
+            placeholder="Juan Pérez"
+            value={name}
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="email">{t("register.email")}</label>
           <input
             type="email"
             id="email"
@@ -69,18 +82,30 @@ if (Astro.request.method === "POST") {
         </div>
 
         <div class="form-group">
-          <label for="password">{t("login.password")}</label>
+          <label for="password">{t("register.password")}</label>
           <input
             type="password"
             id="password"
             name="password"
             required
-            autocomplete="current-password"
-            placeholder="demo123"
+            autocomplete="new-password"
+            placeholder="••••••••"
           />
         </div>
 
-        <button type="submit" class="submit-button">{t("login.submit")}</button>
+        <div class="form-group">
+          <label for="confirm_password">{t("register.confirm_password")}</label>
+          <input
+            type="password"
+            id="confirm_password"
+            name="confirm_password"
+            required
+            autocomplete="new-password"
+            placeholder="••••••••"
+          />
+        </div>
+
+        <button type="submit" class="submit-button">{t("register.submit")}</button>
       </form>
 
       <div class="divider">o</div>
@@ -93,11 +118,11 @@ if (Astro.request.method === "POST") {
           <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
           <path fill="none" d="M0 0h48v48H0z"/>
         </svg>
-        {t("login.google")}
+        {t("register.google")}
       </button>
 
       <p class="auth-switch">
-        {t("login.no_account")} <a href={`/${lang}/register`}>{t("register.submit")}</a>
+        {t("register.has_account")} <a href={`/${lang}/login`}>{t("login.submit")}</a>
       </p>
     </div>
   </div>
@@ -257,16 +282,6 @@ if (Astro.request.method === "POST") {
 
   .auth-switch a:hover {
     text-decoration: underline;
-  }
-
-  .demo-info {
-    text-align: center;
-    font-size: 0.875rem;
-    color: var(--text-light);
-    padding: 1rem;
-    background-color: var(--background);
-    border-radius: 0.375rem;
-    border: 1px solid var(--border);
   }
 
   @media (max-width: 768px) {
