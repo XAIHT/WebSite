@@ -104,6 +104,12 @@ if (!session?.value) {
         <h2>📁 {t("panel.projects")}</h2>
         <p>Access your active research projects.</p>
         <ul class="project-list">
+          <li class="project-link-item">
+            <a href={`/${locale}/tlamatini`} class="project-link">
+              <img src="/tlamatini.jpg" alt="Tlamatini" class="project-icon" />
+              <span>Tlamatini</span>
+            </a>
+          </li>
           <li>🔬 Quantum Computing Research</li>
           <li>🤖 AI Ethics Study</li>
           <li>🌐 Distributed Systems Analysis</li>
@@ -265,6 +271,34 @@ if (!session?.value) {
     background-color: var(--background);
     border-radius: 0.375rem;
     border-left: 3px solid var(--primary);
+  }
+
+  .project-link-item {
+    padding: 0 !important;
+  }
+
+  .project-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    text-decoration: none;
+    color: var(--text);
+    font-weight: 600;
+    transition: background-color 0.2s, transform 0.15s;
+    border-radius: 0.375rem;
+  }
+
+  .project-link:hover {
+    background-color: rgba(37, 99, 235, 0.08);
+    transform: translateX(4px);
+  }
+
+  .project-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    object-fit: cover;
   }
 
   @media (max-width: 768px) {
