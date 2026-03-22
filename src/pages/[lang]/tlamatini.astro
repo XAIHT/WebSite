@@ -15,25 +15,6 @@ if (!session?.value) {
   return Astro.redirect(`/${locale}/login`);
 }
 
-// Determine back link and text based on referer
-const referer = Astro.request.headers.get("referer");
-let backLink = `/${locale}/panel`;
-let backText = t("tlamatini.back");
-
-if (referer) {
-  try {
-    const url = new URL(referer);
-    const path = url.pathname;
-    if (path === '/' || path === `/${locale}` || path === `/${locale}/` || path === '/en' || path === '/es') {
-      backLink = `/${locale}`;
-      // Use the new translation key for the home back link
-      backText = t("tlamatini.back.home" as any);
-    }
-  } catch (e) {
-    // Ignore invalid url
-  }
-}
-
 const techStack = [
   { category: "Backend", tech: "Python 3.12+, Django 5.2, Daphne ASGI" },
   { category: "AI / ML", tech: "LangChain 0.3, LangGraph, FAISS, BM25" },
@@ -73,14 +54,33 @@ const techStack = [
             >
             {t("tlamatini.cta")}
           </a>
-          <a href={backLink} class="btn-secondary">
-            ← {backText}
-          </a>
+<a href={`/${locale}/panel`} class="btn-secondary" id="back-btn">
+  ← <span id="back-text">{t("tlamatini.back")}</span>
+</a>
         </div>
       </div>
     </section>
 
-    <!-- Features Grid -->
+<script define:vars={{ locale, homeText: t("tlamatini.back.home" as any), panelText: t("tlamatini.back") }}>
+  document.addEventListener("DOMContentLoaded", () => {
+    const backBtn = document.getElementById("back-btn");
+    const backTextEl = document.getElementById("back-text");
+    const ref = document.referrer;
+    if (ref && backBtn && backTextEl) {
+      try {
+        const url = new URL(ref);
+        const p = url.pathname;
+        if (p === '/' || p === `/${locale}` || p === `/${locale}/` || p === '/en' || p === '/es' || p === '/en/' || p === '/es/') {
+          backBtn.href = p;
+          backTextEl.textContent = homeText;
+        } else if (p.includes('/panel')) {
+          backBtn.href = p;
+          backTextEl.textContent = panelText;
+        }
+      } catch(e) {}
+    }
+  });
+</script>
     <section class="features-section">
       <h2 class="section-title">{t("tlamatini.features.title")}</h2>
       <div class="features-grid">
