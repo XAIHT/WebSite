@@ -15,6 +15,25 @@ if (!session?.value) {
   return Astro.redirect(`/${locale}/login`);
 }
 
+// Determine back link and text based on referer
+const referer = Astro.request.headers.get("referer");
+let backLink = `/${locale}/panel`;
+let backText = t("tlamatini.back");
+
+if (referer) {
+  try {
+    const url = new URL(referer);
+    const path = url.pathname;
+    if (path === '/' || path === `/${locale}` || path === `/${locale}/` || path === '/en' || path === '/es') {
+      backLink = `/${locale}`;
+      // Use the new translation key for the home back link
+      backText = t("tlamatini.back.home" as any);
+    }
+  } catch (e) {
+    // Ignore invalid url
+  }
+}
+
 const techStack = [
   { category: "Backend", tech: "Python 3.12+, Django 5.2, Daphne ASGI" },
   { category: "AI / ML", tech: "LangChain 0.3, LangGraph, FAISS, BM25" },
@@ -54,8 +73,8 @@ const techStack = [
             >
             {t("tlamatini.cta")}
           </a>
-          <a href={`/${locale}/panel`} class="btn-secondary">
-            ← {t("tlamatini.back")}
+          <a href={backLink} class="btn-secondary">
+            ← {backText}
           </a>
         </div>
       </div>

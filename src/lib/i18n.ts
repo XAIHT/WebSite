@@ -81,6 +81,7 @@ export const ui = {
     'tlamatini.tech.title': 'Technology Stack',
     'tlamatini.cta': 'View on GitHub',
     'tlamatini.back': 'Back to Panel',
+    'tlamatini.back.home': 'Back to Home',
 
     'footer.rights': 'All rights reserved.',
     'footer.contact': 'Contact',
@@ -162,6 +163,7 @@ export const ui = {
     'tlamatini.tech.title': 'Stack Tecnológico',
     'tlamatini.cta': 'Ver en GitHub',
     'tlamatini.back': 'Volver al Panel',
+    'tlamatini.back.home': 'Volver al Inicio',
 
     'footer.rights': 'Todos los derechos reservados.',
     'footer.contact': 'Contacto',
