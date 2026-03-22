@@ -1,0 +1,12 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { useTranslations } from "../lib/i18n";
+const t = useTranslations("en");
+---
+<Layout title="Page Not Found">
+  <div style="text-align: center; padding: 5rem 2rem;">
+    <h1 style="font-size: 4rem; color: var(--primary);">404</h1>
+    <p style="font-size: 1.5rem; margin-bottom: 2rem; color: var(--text-light);">Page Not Found / Página no encontrada</p>
+    <a href="/en" class="btn-primary" style="padding: 1rem 2rem; background-color: var(--primary); color: white; text-decoration: none; border-radius: 0.5rem;">{t("nav.home")}</a>
+  </div>
+</Layout>
