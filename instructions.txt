@@ -1,0 +1,9 @@
+
+docker image rm -f angelakimichellle/xaiht:latest
+docker image rm -f angelakimichellle/xaiht:1.0
+
+docker build -t angelakimichellle/xaiht:latest .
+docker tag angelakimichellle/xaiht:latest angelakimichellle/xaiht:1.0
+docker push angelakimichellle/xaiht:1.0
+docker push angelakimichellle/xaiht:latest
+
