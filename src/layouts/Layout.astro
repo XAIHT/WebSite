@@ -37,6 +37,13 @@ const isLoggedIn = Astro.cookies.get("session")?.value;
       })();
       document.documentElement.setAttribute("data-theme", theme);
       window.localStorage.setItem("theme", theme);
+
+      // Track navigation origin for dynamic back buttons
+      if (!window.location.pathname.includes('/tlamatini')) {
+        try {
+          sessionStorage.setItem("tlamatini_origin", window.location.pathname);
+        } catch (e) {}
+      }
     </script>
     <!-- Note: 'unsafe-inline' is used for development. In production, implement CSP with nonces via server headers -->
     <meta

@@ -15,15 +15,6 @@ if (!session?.value) {
   return Astro.redirect(`/${locale}/login`);
 }
 
-const fromSource = Astro.url.searchParams.get("from");
-let backLink = `/${locale}/panel`;
-let backText = t("tlamatini.back");
-
-if (fromSource === "home") {
-  backLink = `/${locale}`;
-  backText = t("tlamatini.back.home" as any);
-}
-
 const techStack = [
   { category: "Backend", tech: "Python 3.12+, Django 5.2, Daphne ASGI" },
   { category: "AI / ML", tech: "LangChain 0.3, LangGraph, FAISS, BM25" },
@@ -63,14 +54,37 @@ const techStack = [
             >
             {t("tlamatini.cta")}
           </a>
-          <a href={backLink} class="btn-secondary">
-            ← {backText}
+          <a href={`/${locale}/panel`} class="btn-secondary" id="client-back-btn">
+            ← <span id="client-back-text">{t("tlamatini.back")}</span>
           </a>
         </div>
       </div>
     </section>
 
+<script define:vars={{ locale, homeText: t("tlamatini.back.home" as any), panelText: t("tlamatini.back") }}>
+  document.addEventListener("DOMContentLoaded", () => {
+    try {
+      const lastPage = sessionStorage.getItem("tlamatini_origin");
+      const btn = document.getElementById("client-back-btn");
+      const text = document.getElementById("client-back-text");
+      
+      if (lastPage && btn && text) {
+        if (lastPage === '/' || lastPage === `/${locale}` || lastPage === `/${locale}/` || lastPage === '/en' || lastPage === '/es') {
+          btn.href = `/${locale}/`;
+          text.textContent = homeText;
+        } else if (lastPage.includes('/panel')) {
+          btn.href = `/${locale}/panel`;
+          text.textContent = panelText;
+        }
+      }
+    } catch (e) {
+      // Ignore sessionStorage access errors
+    }
+  });
+</script>
+
     <!-- Features Grid -->
+    <section class="features-section">
       <h2 class="section-title">{t("tlamatini.features.title")}</h2>
       <div class="features-grid">
         <div class="feature-card feature-rag">
