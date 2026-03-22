@@ -1,37 +1,48 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { useTranslations } from '../lib/i18n';
+import Layout from "../layouts/Layout.astro";
+import { useTranslations } from "../lib/i18n";
 
-const lang = 'en';
+const lang = "en";
 const t = useTranslations(lang);
 ---
 
-<Layout title={t('home.title')} description={t('home.description')}>
+<Layout title={t("home.title")} description={t("home.description")}>
   <div class="hero">
-    <h1>{t('home.welcome')}</h1>
-    <p class="subtitle">{t('home.subtitle')}</p>
-    <p class="description">{t('home.description')}</p>
-    <a href={`/${lang}/login`} class="cta-button">{t('home.cta')}</a>
+    <h1>{t("home.welcome")}</h1>
+    <p class="subtitle">{t("home.subtitle")}</p>
+    <p class="description">{t("home.description")}</p>
+    <a href={`/${lang}/login`} class="cta-button">{t("home.cta")}</a>
   </div>
-  
+
   <section class="features">
-    <h2>{t('home.features.title')}</h2>
+    <h2>{t("home.features.title")}</h2>
     <div class="features-grid">
       <div class="feature-card">
         <div class="icon">🔬</div>
-        <h3>{t('home.features.research')}</h3>
-        <p>{t('home.features.research.desc')}</p>
+        <h3>{t("home.features.research")}</h3>
+        <p>{t("home.features.research.desc")}</p>
       </div>
       <div class="feature-card">
         <div class="icon">💡</div>
-        <h3>{t('home.features.innovation')}</h3>
-        <p>{t('home.features.innovation.desc')}</p>
+        <h3>{t("home.features.innovation")}</h3>
+        <p>{t("home.features.innovation.desc")}</p>
       </div>
       <div class="feature-card">
         <div class="icon">🎯</div>
-        <h3>{t('home.features.consulting')}</h3>
-        <p>{t('home.features.consulting.desc')}</p>
+        <h3>{t("home.features.consulting")}</h3>
+        <p>{t("home.features.consulting.desc")}</p>
       </div>
+    </div>
+  </section>
+
+  <section class="initial-project">
+    <h2>{t("home.initial-project.title")}</h2>
+    <div class="features-grid">
+      <a href={`/${lang}/tlamatini`} class="feature-card" style="text-decoration: none; display: block;">
+        <div class="icon">💡</div>
+        <h3>{t("home.initial-project.innovation")}</h3>
+        <p>{t("home.initial-project.innovation.desc")}</p>
+      </a>
     </div>
   </section>
 </Layout>
@@ -43,27 +54,27 @@ const t = useTranslations(lang);
     max-width: 800px;
     margin: 0 auto;
   }
-  
+
   h1 {
     font-size: 3rem;
     margin-bottom: 1rem;
     color: var(--primary);
     line-height: 1.2;
   }
-  
+
   .subtitle {
     font-size: 1.5rem;
     color: var(--text-light);
     margin-bottom: 1.5rem;
   }
-  
+
   .description {
     font-size: 1.125rem;
     line-height: 1.8;
     margin-bottom: 2rem;
     color: var(--text);
   }
-  
+
   .cta-button {
     display: inline-block;
     padding: 1rem 2rem;
@@ -76,68 +87,81 @@ const t = useTranslations(lang);
     transition: background-color 0.2s;
     box-shadow: var(--shadow-lg);
   }
-  
+
   .cta-button:hover {
     background-color: var(--primary-dark);
   }
-  
+
   .features {
     margin-top: 4rem;
   }
-  
+
   .features h2 {
     text-align: center;
     font-size: 2rem;
     margin-bottom: 3rem;
     color: var(--text);
   }
-  
+
   .features-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 2rem;
     margin-bottom: 4rem;
   }
-  
+
+  .initial-project {
+    margin-top: 4rem !important;
+    justify-self: center !important;
+    text-align-last: center !important;
+    width: 33% !important;
+  }
+
+  .initial-project h2 {
+    font-size: xx-large !important;
+  }
+
   .feature-card {
     background-color: var(--surface);
     padding: 2rem;
     border-radius: 0.5rem;
     box-shadow: var(--shadow);
     text-align: center;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition:
+      transform 0.2s,
+      box-shadow 0.2s;
   }
-  
+
   .feature-card:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-lg);
   }
-  
+
   .icon {
     font-size: 3rem;
     margin-bottom: 1rem;
   }
-  
+
   .feature-card h3 {
     font-size: 1.25rem;
     margin-bottom: 0.5rem;
     color: var(--text);
   }
-  
+
   .feature-card p {
     color: var(--text-light);
     line-height: 1.6;
   }
-  
+
   @media (max-width: 768px) {
     h1 {
       font-size: 2rem;
     }
-    
+
     .subtitle {
       font-size: 1.25rem;
     }
-    
+
     .hero {
       padding: 2rem 1rem;
     }

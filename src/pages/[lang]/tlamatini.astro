@@ -4,7 +4,7 @@ import { useTranslations, languages } from "../../lib/i18n";
 
 const { lang } = Astro.params;
 if (!lang || !(lang in languages)) {
-  return Astro.redirect('/404');
+  return Astro.redirect("/404");
 }
 const locale = lang as keyof typeof languages;
 const t = useTranslations(locale);
@@ -16,18 +16,17 @@ if (!session?.value) {
 }
 
 const techStack = [
-  { category: 'Backend', tech: 'Python 3.12+, Django 5.2, Daphne ASGI' },
-  { category: 'AI / ML', tech: 'LangChain 0.3, LangGraph, FAISS, BM25' },
-  { category: 'LLM APIs', tech: 'Ollama, Anthropic Claude, Qwen Vision' },
-  { category: 'Communication', tech: 'WebSockets, gRPC, MCP 1.25' },
-  { category: 'Frontend', tech: 'Bootstrap 5, jQuery UI, Modular JS' },
-  { category: 'Packaging', tech: 'PyInstaller + Tkinter GUI Installer' },
+  { category: "Backend", tech: "Python 3.12+, Django 5.2, Daphne ASGI" },
+  { category: "AI / ML", tech: "LangChain 0.3, LangGraph, FAISS, BM25" },
+  { category: "LLM APIs", tech: "Ollama, Anthropic Claude, Qwen Vision" },
+  { category: "Communication", tech: "WebSockets, gRPC, MCP 1.25" },
+  { category: "Frontend", tech: "Bootstrap 5, jQuery UI, Modular JS" },
+  { category: "Packaging", tech: "PyInstaller + Tkinter GUI Installer" },
 ];
 ---
 
 <Layout title={t("tlamatini.title")}>
   <div class="tlamatini-page">
-
     <!-- Hero Section -->
     <section class="hero-section">
       <div class="hero-glow"></div>
@@ -37,8 +36,22 @@ const techStack = [
         <p class="hero-tagline">{t("tlamatini.hero.tagline")}</p>
         <p class="hero-description">{t("tlamatini.subtitle")}</p>
         <div class="hero-actions">
-          <a href="https://github.com/XAIHT/Tlamatini" target="_blank" rel="noopener" class="btn-primary">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          <a
+            href="https://github.com/XAIHT/Tlamatini"
+            target="_blank"
+            rel="noopener"
+            class="btn-primary"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              ><path
+                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+              ></path></svg
+            >
             {t("tlamatini.cta")}
           </a>
           <a href={`/${locale}/panel`} class="btn-secondary">
@@ -105,15 +118,16 @@ const techStack = [
     <section class="tech-section">
       <h2 class="section-title">{t("tlamatini.tech.title")}</h2>
       <div class="tech-grid">
-        {techStack.map(item => (
-          <div class="tech-card">
-            <span class="tech-category">{item.category}</span>
-            <span class="tech-value">{item.tech}</span>
-          </div>
-        ))}
+        {
+          techStack.map((item) => (
+            <div class="tech-card">
+              <span class="tech-category">{item.category}</span>
+              <span class="tech-value">{item.tech}</span>
+            </div>
+          ))
+        }
       </div>
     </section>
-
   </div>
 </Layout>
 
@@ -149,7 +163,11 @@ const techStack = [
     top: -60px;
     width: 400px;
     height: 400px;
-    background: radial-gradient(circle, rgba(37, 99, 235, 0.15), transparent 70%);
+    background: radial-gradient(
+      circle,
+      rgba(37, 99, 235, 0.15),
+      transparent 70%
+    );
     border-radius: 50%;
     z-index: 0;
     pointer-events: none;
@@ -157,8 +175,14 @@ const techStack = [
   }
 
   @keyframes pulseGlow {
-    0%   { opacity: 0.6; transform: scale(1); }
-    100% { opacity: 1; transform: scale(1.15); }
+    0% {
+      opacity: 0.6;
+      transform: scale(1);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1.15);
+    }
   }
 
   .hero-content {
@@ -171,15 +195,19 @@ const techStack = [
     height: 120px;
     border-radius: 1.5rem;
     object-fit: cover;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
     margin-bottom: 1.5rem;
-    border: 3px solid rgba(255,255,255,0.08);
+    border: 3px solid rgba(255, 255, 255, 0.08);
     animation: floatLogo 3s ease-in-out infinite alternate;
   }
 
   @keyframes floatLogo {
-    0%   { transform: translateY(0); }
-    100% { transform: translateY(-8px); }
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-8px);
+    }
   }
 
   .hero-title {
@@ -230,13 +258,15 @@ const techStack = [
     text-decoration: none;
     font-weight: 600;
     font-size: 1rem;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 4px 14px rgba(37,99,235,0.35);
+    transition:
+      transform 0.2s,
+      box-shadow 0.2s;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
   }
 
   .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(37,99,235,0.5);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
   }
 
   .btn-secondary {
@@ -251,7 +281,9 @@ const techStack = [
     text-decoration: none;
     font-weight: 600;
     font-size: 1rem;
-    transition: background-color 0.2s, border-color 0.2s;
+    transition:
+      background-color 0.2s,
+      border-color 0.2s;
   }
 
   .btn-secondary:hover {
@@ -270,25 +302,42 @@ const techStack = [
     gap: 1.5rem;
   }
 
+  .initial-project {
+    margin-top: 4rem !important;
+    justify-self: center !important;
+    text-align-last: center !important;
+    width: 33% !important;
+  }
+
+  .initial-project h2 {
+    font-size: xx-large !important;
+  }
+
   .feature-card {
     background-color: var(--surface);
     padding: 2rem;
     border-radius: 0.75rem;
     box-shadow: var(--shadow);
     border-left: 4px solid var(--primary);
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition:
+      transform 0.2s,
+      box-shadow 0.2s;
     position: relative;
     overflow: hidden;
   }
 
   .feature-card::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     right: 0;
     width: 100px;
     height: 100px;
-    background: radial-gradient(circle, rgba(37,99,235,0.06), transparent 70%);
+    background: radial-gradient(
+      circle,
+      rgba(37, 99, 235, 0.06),
+      transparent 70%
+    );
     border-radius: 50%;
     pointer-events: none;
   }
@@ -298,12 +347,24 @@ const techStack = [
     box-shadow: var(--shadow-lg);
   }
 
-  .feature-rag     { border-left-color: #3b82f6; }
-  .feature-workflow { border-left-color: #8b5cf6; }
-  .feature-chat     { border-left-color: #06b6d4; }
-  .feature-models   { border-left-color: #f59e0b; }
-  .feature-tools    { border-left-color: #10b981; }
-  .feature-enterprise { border-left-color: #ef4444; }
+  .feature-rag {
+    border-left-color: #3b82f6;
+  }
+  .feature-workflow {
+    border-left-color: #8b5cf6;
+  }
+  .feature-chat {
+    border-left-color: #06b6d4;
+  }
+  .feature-models {
+    border-left-color: #f59e0b;
+  }
+  .feature-tools {
+    border-left-color: #10b981;
+  }
+  .feature-enterprise {
+    border-left-color: #ef4444;
+  }
 
   .feature-icon {
     font-size: 2.5rem;
@@ -333,8 +394,8 @@ const techStack = [
     margin: 0 auto;
     border-radius: 1rem;
     overflow: hidden;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.3);
-    border: 2px solid rgba(255,255,255,0.05);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.05);
   }
 
   .video-container video {

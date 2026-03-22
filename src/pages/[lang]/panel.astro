@@ -4,7 +4,7 @@ import { useTranslations, languages } from "../../lib/i18n";
 
 const { lang } = Astro.params;
 if (!lang || !(lang in languages)) {
-  return Astro.redirect('/404');
+  return Astro.redirect("/404");
 }
 const locale = lang as keyof typeof languages;
 const t = useTranslations(locale);
@@ -27,7 +27,7 @@ if (!session?.value) {
       <div class="stat-card">
         <div class="stat-icon">📊</div>
         <div class="stat-content">
-          <h3>15</h3>
+          <h3>1</h3>
           <p>{t("panel.stats.projects")}</p>
         </div>
       </div>
@@ -35,7 +35,7 @@ if (!session?.value) {
       <div class="stat-card">
         <div class="stat-icon">✅</div>
         <div class="stat-content">
-          <h3>234</h3>
+          <h3>1</h3>
           <p>{t("panel.stats.tasks")}</p>
         </div>
       </div>
@@ -43,13 +43,14 @@ if (!session?.value) {
       <div class="stat-card">
         <div class="stat-icon">👥</div>
         <div class="stat-content">
-          <h3>42</h3>
+          <h3>1</h3>
           <p>{t("panel.stats.team")}</p>
         </div>
       </div>
     </div>
 
     <div class="panel-sections">
+      <!--
       <div class="section-card">
         <h2>📈 {t("panel.dashboard")}</h2>
         <p>View your project analytics and performance metrics.</p>
@@ -61,6 +62,7 @@ if (!session?.value) {
           <div class="chart-bar" style="height: 70%;"></div>
         </div>
       </div>
+      -->
 
       <div class="section-card">
         <h2>👤 {t("panel.profile")}</h2>
@@ -110,10 +112,6 @@ if (!session?.value) {
               <span>Tlamatini</span>
             </a>
           </li>
-          <li>🔬 Quantum Computing Research</li>
-          <li>🤖 AI Ethics Study</li>
-          <li>🌐 Distributed Systems Analysis</li>
-          <li>🔐 Cryptography Implementation</li>
         </ul>
       </div>
     </div>
@@ -285,7 +283,9 @@ if (!session?.value) {
     text-decoration: none;
     color: var(--text);
     font-weight: 600;
-    transition: background-color 0.2s, transform 0.15s;
+    transition:
+      background-color 0.2s,
+      transform 0.15s;
     border-radius: 0.375rem;
   }
 
