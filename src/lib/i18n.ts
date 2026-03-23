@@ -98,7 +98,7 @@ export const ui = {
     'home.subtitle': 'Innovación y Excelencia en Tecnología',
     'home.welcome': 'Bienvenido a XAIHT',
     'home.description': 'Somos una empresa líder en investigación tecnológica dedicada a la innovación, desarrollo e implementación de soluciones de vanguardia.',
-    'home.features.title': 'Qué Ofrecemos',
+    'home.features.title': 'Nuestra oferta',
     'home.features.research': 'Investigación Avanzada',
     'home.features.research.desc': 'Realizamos investigación de vanguardia en diversos campos tecnológicos.',
     'home.features.innovation': 'Innovación',
