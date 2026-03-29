@@ -4,8 +4,36 @@ import http from 'http';
 import express from 'express';
 // @ts-ignore
 import { handler as astroHandler } from './dist/server/entry.mjs';
+import { rateLimit } from 'express-rate-limit';
 
 const app = express();
+
+// Trust reverse proxy for correct IP identification in Kubernetes/Ingress
+app.set('trust proxy', 1);
+
+// Global rate limiter
+const globalLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    limit: 100, // Limit each IP to 100 requests per window
+    standardHeaders: 'draft-7',
+    legacyHeaders: false,
+    message: 'Too many requests from this IP, please try again after 15 minutes'
+});
+
+// Aggressive rate limiter for sensitive routes (e.g. login, panel)
+const sensitiveLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    limit: 10, // Limit each IP to 10 requests per window for sensitive routes
+    standardHeaders: 'draft-7',
+    legacyHeaders: false,
+    message: 'Too many requests to this sensitive endpoint, please try again after 15 minutes'
+});
+
+// Apply the global rate limiting middleware to all requests
+app.use(globalLimiter);
+
+// Apply aggressive limiter to sensitive routes, including localized paths
+app.use(['/login', '/panel', '/:lang/login', '/:lang/panel', '/api', '/:lang/api'], sensitiveLimiter);
 
 // Serve static assets from the Astro build output directory
 app.use(express.static('dist/client'));

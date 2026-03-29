@@ -4,7 +4,29 @@ import https from "https";
 import http from "http";
 import express from "express";
 import { handler as astroHandler } from "./dist/server/entry.mjs";
+import { rateLimit } from "express-rate-limit";
 var app = express();
+app.set("trust proxy", 1);
+var globalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1e3,
+  // 15 minutes
+  limit: 100,
+  // Limit each IP to 100 requests per window
+  standardHeaders: "draft-7",
+  legacyHeaders: false,
+  message: "Too many requests from this IP, please try again after 15 minutes"
+});
+var sensitiveLimiter = rateLimit({
+  windowMs: 15 * 60 * 1e3,
+  // 15 minutes
+  limit: 10,
+  // Limit each IP to 10 requests per window for sensitive routes
+  standardHeaders: "draft-7",
+  legacyHeaders: false,
+  message: "Too many requests to this sensitive endpoint, please try again after 15 minutes"
+});
+app.use(globalLimiter);
+app.use(["/login", "/panel", "/:lang/login", "/:lang/panel", "/api", "/:lang/api"], sensitiveLimiter);
 app.use(express.static("dist/client"));
 app.use(astroHandler);
 var HOST = process.env.HOST || "0.0.0.0";

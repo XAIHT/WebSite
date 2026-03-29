@@ -14,7 +14,8 @@
   "dependencies": {
     "@astrojs/node": "^9.1.0",
     "astro": "^5.16.15",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.3.1"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
